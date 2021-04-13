@@ -12,9 +12,9 @@ exports.create = (req, res) => {
     // Cria a Pessoa
     const pessoa = new Pessoa({
         nome: req.body.nome || "Anonimo", 
-        telefone: req.body.telefone,
-        CPF: req.body.CPF,
-        cursos: req.body.cursos
+        sobrenome: req.body.sobrenome || '',
+        email: req.body.email,
+        senha: req.body.senha,
     });
 
     // Salva Pessoa no banco de dados.
@@ -74,10 +74,10 @@ exports.update = (req, res) => {
 
     // Ache a Pessoa e a atualize com a requisicao
     Pessoa.findByIdAndUpdate(req.params.pessoaId, {
-        nome: req.body.nome || "Anonimo",
-        telefone: req.body.telefone,
-        CPF: req.body.CPF,
-        cursos: req.body.cursos
+        nome: req.body.nome || "Anonimo", 
+        sobrenome: req.body.sobrenome || '',
+        email: req.body.email,
+        senha: req.body.senha,
     }, {new: true})
     .then(pessoa => {
         if(!pessoa) {

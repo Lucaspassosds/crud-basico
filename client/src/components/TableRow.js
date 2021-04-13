@@ -16,10 +16,6 @@ class TableRow extends Component {
         };
     }
 
-    componentDidMount() {
-        this.props.mostrar('Hello from TabRow!');
-    }
-
     delete() {
         axios
             .delete('http://localhost:3001/pessoas/' + this.props.obj._id)
@@ -37,8 +33,8 @@ class TableRow extends Component {
                 {this.state.isDeleted ? null : (
                     <tr>
                         <td>{this.props.obj.nome}</td>
-                        <td>{this.props.obj.telefone}</td>
-                        <td>{this.props.obj.CPF}</td>
+                        <td>{this.props.obj.sobrenome}</td>
+                        <td>{this.props.obj.email}</td>
                         <td>
                             <Link
                                 to={'/edit/' + this.props.obj._id}

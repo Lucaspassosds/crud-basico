@@ -2,36 +2,28 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import InputMask from 'react-input-mask';
 import '../css/create.css';
 
 export default class Create extends Component {
     constructor(props) {
         super(props);
         this.onChangeNome = this.onChangeNome.bind(this);
-        this.onChangeTelefone = this.onChangeTelefone.bind(this);
-        this.onChangeCPF = this.onChangeCPF.bind(this);
+        this.onChangeSobrenome = this.onChangeSobrenome.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeSenha = this.onChangeSenha.bind(this);
+        this.onChangeSenhaConfirm = this.onChangeSenhaConfirm.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.sumirMsg = this.sumirMsg.bind(this);
 
         this.state = {
             nome: '',
             nomeAntigo: '',
-            telefone: '',
-            CPF: '',
-            cursos: [],
+            sobrenome: '',
+            email: '',
+            senha: '',
+            senhaConfirm: '',
             aparecerMsgSucesso: false,
         };
-    }
-    componentDidMount() {
-        axios
-            .get('http://localhost:3001/cursos')
-            .then((response) => {
-                this.setState({ cursos: response.data });
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
     onChangeNome(e) {
@@ -39,14 +31,24 @@ export default class Create extends Component {
             nome: e.target.value,
         });
     }
-    onChangeTelefone(e) {
+    onChangeSobrenome(e) {
         this.setState({
-            telefone: e.target.value,
+            sobrenome: e.target.value,
         });
     }
-    onChangeCPF(e) {
+    onChangeEmail(e) {
         this.setState({
-            CPF: e.target.value,
+            email: e.target.value,
+        });
+    }
+    onChangeSenha(e){
+        this.setState({
+            senha: e.target.value,
+        });
+    }
+    onChangeSenhaConfirm(e){
+        this.setState({
+            senhaConfirm: e.target.value,
         });
     }
 
@@ -56,21 +58,16 @@ export default class Create extends Component {
         /*  this.setState({
             aparecerMsgSucesso: true,
         }); */
-
-        const cursosArray = [];
-        for (const i in this.state.cursos) {
-            if (document.getElementById(this.state.cursos[i].nome).checked) {
-                console.log(this.state.cursos[i].nome);
-                console.log(this.state.cursos[i]._id);
-                cursosArray.push(this.state.cursos[i]._id);
-            }
+        if(this.state.senha !== this.state.senhaConfirm){
+            alert('As senhas nao coincidem!');
+            return;
         }
 
         const obj = {
             nome: this.state.nome,
-            telefone: this.state.telefone,
-            CPF: this.state.CPF,
-            cursos: cursosArray,
+            sobrenome: this.state.sobrenome,
+            email: this.state.email,
+            senha: this.state.senha,
         };
         axios
             .post('http://localhost:3001/pessoas', obj)
@@ -79,8 +76,10 @@ export default class Create extends Component {
                 this.setState({
                     nomeAntigo: this.state.nome,
                     nome: '',
-                    telefone: '',
-                    CPF: '',
+                    sobrenome: '',
+                    email: '',
+                    senha: '',
+                    senhaConfirm: '',
                     aparecerMsgSucesso: true,
                 });
             })
@@ -96,7 +95,7 @@ export default class Create extends Component {
     render() {
         return (
             <div style={{ marginTop: 10 }}>
-                <h3>Adicionar nova Pessoa</h3>
+                <h3>Adicionar novo Usuário</h3>
                 {this.state.aparecerMsgSucesso ? (
                     <div className="success-box">
                         <p className="success-text">
@@ -115,46 +114,51 @@ export default class Create extends Component {
                             value={this.state.nome}
                             onChange={this.onChangeNome}
                             maxLength="60"
+                            required
                         />
                     </div>
                     <div className="form-group">
-                        <label>Telefone: </label>
-                        <InputMask
-                            type="tel"
-                            className="form-control"
-                            value={this.state.telefone}
-                            onChange={this.onChangeTelefone}
-                            placeholder="(DDD)9XXXX-XXXX"
-                            mask="(999)99999-9999"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Número do CPF: </label>
-                        <InputMask
+                        <label>Sobrenome: </label>
+                        <input
                             type="text"
                             className="form-control"
-                            value={this.state.CPF}
-                            onChange={this.onChangeCPF}
-                            placeholder="XXX.XXX.XXX-XX"
-                            mask="999.999.999-99"
+                            value={this.state.sobrenome}
+                            onChange={this.onChangeSobrenome}
+                            maxLength="60"
                         />
                     </div>
                     <div className="form-group">
-                        <label>Cursos: </label>
-                        <ul>
-                            {this.state.cursos.map((curso) => {
-                                return (
-                                    <li key={curso.nome}>
-                                        <input
-                                            id={curso.nome}
-                                            type="checkbox"
-                                            value={curso.nome}
-                                        />{' '}
-                                        {curso.nome}
-                                    </li>
-                                );
-                            })}
-                        </ul>
+                        <label>Endereço de email: </label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            value={this.state.email}
+                            onChange={this.onChangeEmail}
+                            placeholder="mail@mail.com"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Senha: </label>
+                        <input
+                            type='password'
+                            className="form-control"
+                            value={this.state.senha}
+                            onChange={this.onChangeSenha}
+                            placeholder="Digite uma senha de no maximo 8 digitos"
+                            maxLength='8'
+                         />
+                    </div>
+                    <div className="form-group">
+                        <label>Confirme sua senha: </label>
+                        <input
+                            type='password'
+                            className="form-control"
+                            value={this.state.senhaConfirm}
+                            onChange={this.onChangeSenhaConfirm}
+                            placeholder="Digite novamente a senha"
+                            maxLength='8'
+                         />
                     </div>
                     <div className="form-group">
                         <input

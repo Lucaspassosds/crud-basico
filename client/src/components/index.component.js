@@ -8,8 +8,6 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
 
-        this.mostrarAlgo = this.mostrarAlgo.bind(this);
-
         this.state = { pessoas: [] };
     }
     componentDidMount() {
@@ -24,18 +22,14 @@ export default class Index extends Component {
     }
     tabRow() {
         return this.state.pessoas.map((object, i) => {
-            return <TableRow obj={object} key={i} mostrar={this.mostrarAlgo} />;
+            return <TableRow obj={object} key={i} />;
         });
-    }
-
-    mostrarAlgo(val) {
-        console.log(val);
     }
 
     render() {
         return (
             <div>
-                <h3 align="center">Lista de Pessoas</h3>
+                <h3 align="center">Lista de Usuarios</h3>
                 <table
                     className="table table-striped"
                     style={{ marginTop: 20 }}
@@ -43,8 +37,8 @@ export default class Index extends Component {
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Telefone</th>
-                            <th>Número do CPF</th>
+                            <th>Sobrenome</th>
+                            <th>Email</th>
                             <th colSpan="2"></th>
                         </tr>
                     </thead>

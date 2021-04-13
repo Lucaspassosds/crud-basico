@@ -36,7 +36,6 @@ app.get('/', (req, res) => {
 });
 
 require('./app/routes/pessoa.routes.js')(app);
-require('./app/routes/curso.routes.js')(app);
 
 // listen para requisicoes
 app.listen(3001, () => {

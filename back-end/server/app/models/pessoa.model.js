@@ -1,11 +1,10 @@
-const Curso = require('../models/curso.model.js');
-const mongoose = require('mongoose'), Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
 const PessoaSchema = mongoose.Schema({
     nome: String,
-    telefone: String,
-    CPF: String,
-    cursos: [ {type : mongoose.Schema.ObjectId, ref: 'Curso' } ]
+    sobrenome: String,
+    email: String,
+    senha: String,
 });
 
 module.exports = mongoose.model('Pessoa', PessoaSchema);

@@ -7,12 +7,6 @@ Banco de dados:MongoDB
 ORM: Mongoose.
 
 É necessário ter o NodeJs instalado e o mongoDB para rodar a aplicação.
-É necessário fazer uma requisição HTTP(indicavel usar o Postman) para o backend para criar as tabelas do tipo CURSO, que serão usadas no front-end.
- Após iniciar o back-end(explicação abaixo), digite a url da API no seu Postman (localhost:3001) e faça uma requisição do tipo POST, com o seguinte corpo:
-  {
-      "nome":"norme-do-curso-que-voce-quiser"
-  } 
-Repita esse processo para a quantidade de cursos que você desejar.
 
 Front end feito com,
 Linguagem: Javascript
